@@ -1,21 +1,14 @@
-#ifndef YMKD60_H
-#define YMKD60_H
+#pragma once
 
 #include "quantum.h"
-#include "led.h"
 
-/* YMKD60 LEDs
- *   GPIO pads
- *   0 F7 WASD LEDs
- *   1 F6 ESC LED
- *   2 F5 FN LED
- *   3 F4 POKER Arrow LEDs
- *   B2 Capslock LED
- *   B0 not connected
- */
-
-/* YMDK60 keymap definition macro
- * K2C, K31 and  K3C are extra keys for ISO
+/* This a shortcut to help you visually see your layout.
+ *
+ * The first section contains all of the arguments representing the physical
+ * layout of the board and position of the keys.
+ *
+ * The second converts the arguments into a two-dimensional array which
+ * represents the switch matrix.
  */
 #define LAYOUT( \
     K00, K01, K02, K03, K04, K05, K06, K07, K08, K09, K0A, K0B, K0C, K0D, \
@@ -98,5 +91,3 @@
     { K30, KC_NO,    K32, K33, K34, K35, K36, K37, K38, K39, K3A, K3B, K3C, K3D }, \
     { K40, K41, K42, KC_NO,    KC_NO,    K45, KC_NO,    KC_NO,    KC_NO,    KC_NO, K4A, K4B, K4C, K4D }  \
 }
-
-#endif
