@@ -1,0 +1,16 @@
+#pragma once
+
+#define LAYOUT_frizinak( \
+    K01, K02, K03, K04, K05, K06, K07, K08, K09, K010, K011, K012, \
+    K11, K12, K13, K14, K15, K16, K17, K18, K19, K110, K111, K112, \
+    K21, K22, K23, K24, K25, K26, K27, K28, K29, K210, K211, K212, \
+    K31, K32, K33, K34,   K3X,    K35, K38, K39, K310, K311, K312  \
+) \
+{ \
+  { K012, K011, K010, K09, K05, K06, K07, K08, K04, K03, K02, K01 }, \
+  { K112, K111, K110, K19, K15, K16, K17, K18, K14, K13, K12, K11 }, \
+  { XXX,  XXX,  XXX,  XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX }, \
+  { K212, K211, K210, K29, K25, K26, K27, K28, K24, K23, K22, K21 }, \
+  { K312, K311, K310, K39, K3X, XXX, K35, K38, K34, K33, K32, K31 }  \
+}
+
