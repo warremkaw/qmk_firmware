@@ -5,30 +5,32 @@
 #define _RAISE  2
 #define _ARROWS 3
 #define _ADJUST 4
+#define _GAME   5
 
 #define SFT OSM(MOD_LSFT)
 
 enum planck_keycodes {
-  K_S1 = SAFE_RANGE,
-  K_S2,
-  K_S3,
-  K_S4,
-  K_S5,
-  K_S6,
-  K_S7,
-  K_S8,
-  K_S9,
-  K_S10,
-  K_U1,
-  K_U2,
-  K_U3,
-  K_U4,
-  K_U5,
-  K_U6,
-  K_U7,
-  K_U8,
-  K_U9,
-  K_U10
+    K_GAME = SAFE_RANGE,
+    K_S1,
+    K_S2,
+    K_S3,
+    K_S4,
+    K_S5,
+    K_S6,
+    K_S7,
+    K_S8,
+    K_S9,
+    K_S10,
+    K_U1,
+    K_U2,
+    K_U3,
+    K_U4,
+    K_U5,
+    K_U6,
+    K_U7,
+    K_U8,
+    K_U9,
+    K_U10
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -36,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,        KC_T,   KC_Y,   KC_U,        KC_I,    KC_O,    KC_P,    KC_BSPC, \
   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,        KC_G,   KC_H,   KC_J,        KC_K,    KC_L,    KC_SCLN, KC_QUOT,  \
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,        KC_B,   KC_N,   KC_M,        KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT, \
-  KC_LCTL, _______, KC_LALT, KC_LGUI, MO(_LOWER),  KC_SPC, KC_SPC, MO(_RAISE),  KC_RGUI, _______, MO(_ARROWS), KC_RCTL  \
+  KC_LCTL, _______, KC_LALT, KC_LGUI, MO(_LOWER),  KC_SPC, KC_SPC, MO(_RAISE),  KC_RGUI, K_GAME,  MO(_ARROWS), KC_RCTL  \
 ),
 
 [_LOWER] = LAYOUT_ortho_4x12( \
@@ -46,17 +48,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
 ),
 
-/* Raise
- * ,-------------------------------------------------------------------------------------.
- * |      |       |   7  |   8  |   9  |       |      |      |      |      |      |      |
- * |------+-------+------+------+------+--------------+------+------+------+------+------|
- * |      |       |   4  |   5  |   6  |       | Left | Down |  Up  | Right|      |      |
- * |------+-------+------+------+------+-------|------+------+------+------+------+------|
- * |      |       |   1  |   2  |   3  |       |      |      |      |      |      |      |
- * |------+-------+------+------+------+-------+------+------+------+------+------+------|
- * |      |       |      |      |   0  |       |      |      |      |      |      |      |
- * `-------------------------------------------------------------------------------------'
- */
 [_RAISE] = LAYOUT_ortho_4x12( \
   _______, XXXXXXX, KC_7,    KC_8,    KC_9, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,    KC_F6,  _______, \
   _______, XXXXXXX, KC_4,    KC_5,    KC_6, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12, _______, \
@@ -78,18 +69,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______  \
 ),
 
+[_GAME] = LAYOUT_ortho_4x12( \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_SPC,  KC_SPC,  _______, _______, _______, _______, _______  \
+)
+
+};
+
+float song_mario_mush[][2] = SONG(MARIO_MUSHROOM);
+float song_down[][2] = SONG(CLOSE_ENCOUNTERS_5_NOTE);
+#define NLONG 16+8
+#define NSHORT 16+8
+#define NPAUSE 0
+float song_mario[][2] = {
+    {NOTE_E7, NLONG}, {NOTE_E7, NLONG}, {NPAUSE, NLONG}, {NOTE_E7, NLONG},
+    {NPAUSE, NLONG}, {NOTE_C7, NLONG}, {NOTE_E7, NLONG}, {NPAUSE, NLONG},
+    {NOTE_G7, NLONG}, {NPAUSE, NLONG}, {NPAUSE, NLONG}, {NPAUSE, NLONG},
+    {NOTE_G6, NLONG}, {NPAUSE, NLONG}, {NPAUSE, NLONG}, {NPAUSE, NLONG},
+
+    {NOTE_C7, NLONG}, {NPAUSE, NLONG}, {NPAUSE, NLONG}, {NOTE_G6, NLONG},
+    {NPAUSE, NLONG}, {NPAUSE, NLONG}, {NOTE_E6, NLONG}, {NPAUSE, NLONG},
+    {NPAUSE, NLONG}, {NOTE_A6, NLONG}, {NPAUSE, NLONG}, {NOTE_B6, NLONG},
+    {NPAUSE, NLONG}, {NOTE_AS6, NLONG}, {NOTE_A6, NLONG}, {NPAUSE, NLONG},
+
+    {NOTE_G6, NSHORT}, {NOTE_E7, NSHORT}, {NOTE_G7, NSHORT},
+    {NOTE_A7, NLONG}, {NPAUSE, NLONG}, {NOTE_F7, NLONG}, {NOTE_G7, NLONG},
+    {NPAUSE, NLONG}, {NOTE_E7, NLONG}, {NPAUSE, NLONG}, {NOTE_C7, NLONG},
+    {NOTE_D7, NLONG}, {NOTE_B6, NLONG}, {NPAUSE, NLONG}, {NPAUSE, NLONG},
+
+    {NOTE_C7, NLONG}, {NPAUSE, NLONG}, {NPAUSE, NLONG}, {NOTE_G6, NLONG},
+    {NPAUSE, NLONG}, {NPAUSE, NLONG}, {NOTE_E6, NLONG}, {NPAUSE, NLONG},
+    {NPAUSE, NLONG}, {NOTE_A6, NLONG}, {NPAUSE, NLONG}, {NOTE_B6, NLONG},
+    {NPAUSE, NLONG}, {NOTE_AS6, NLONG}, {NOTE_A6, NLONG}, {NPAUSE, NLONG},
+
+    {NOTE_G6, NSHORT}, {NOTE_E7, NSHORT}, {NOTE_G7, NSHORT},
+    {NOTE_A7, NLONG}, {NPAUSE, NLONG}, {NOTE_F7, NLONG}, {NOTE_G7, NLONG},
+    {NPAUSE, NLONG}, {NOTE_E7, NLONG}, {NPAUSE, NLONG}, {NOTE_C7, NLONG},
+    {NOTE_D7, NLONG}, {NOTE_B6, NLONG}, {NPAUSE, NLONG}, {NPAUSE, NLONG}
+
 };
 
 float s1[][2] = SONG(IMPERIAL_MARCH);
 float s2[][2] = SONG(ONE_UP_SOUND);
-float s3[][2] = SONG(MARIO_THEME);
+float s3[][2] = SONG(CLOSE_ENCOUNTERS_5_NOTE);
 float s4[][2] = SONG(MARIO_GAMEOVER);
 float s5[][2] = SONG(MARIO_MUSHROOM);
-float s6[][2] = SONG(DISNEY_SONG);
-float s7[][2] = SONG(NUMBER_ONE);
-float s8[][2] = SONG(VICTORY_FANFARE_SHORT);
-float s9[][2] = SONG(ALL_STAR);
-float s10[][2] = SONG(RICK_ROLL);
+float s6[][2] = SONG(MARIO_MUSHROOM);
+float s7[][2] = SONG(ZELDA_PUZZLE);
+float s8[][2] = SONG(ROCK_A_BYE_BABY);
+float s9[][2] = SONG(CLUEBOARD_SOUND );
+float s10[][2] = SONG(FF_PRELUDE);
 
 void matrix_init_user(void) {
     set_unicode_input_mode(UC_LNX);
@@ -183,6 +214,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case K_U10:
+            return false;
+
+        case K_GAME:
+            if (!layer_state_is(_GAME)) {
+                #ifdef AUDIO_ENABLE
+                PLAY_SONG(song_mario_mush);
+                #endif
+                layer_state_set(1U << (_QWERTY | _GAME));
+                return false;
+            }
+
+            #ifdef AUDIO_ENABLE
+            PLAY_SONG(song_down);
+            #endif
+            layer_state_set(1U << _QWERTY);
             return false;
 
         case KC_P:
