@@ -123,7 +123,9 @@ float s9[][2] = SONG(CLUEBOARD_SOUND );
 float s10[][2] = SONG(FF_PRELUDE);
 
 void matrix_init_user(void) {
+    #ifdef UNICODE_ENABLE
     set_unicode_input_mode(UC_LNX);
+    #endif
 };
 
 uint32_t layer_state_set_user(uint32_t state) {
