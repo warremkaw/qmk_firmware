@@ -4,13 +4,17 @@
 #define _LOWER  1
 #define _RAISE  2
 #define _ARROWS 3
-#define _ADJUST 4
+#define _LR     4
 #define _GAME   5
 
 #define SFT OSM(MOD_LSFT)
 
 enum planck_keycodes {
     K_GAME = SAFE_RANGE,
+    K_PAREN,
+    K_BRACE,
+    K_CBRAC,
+    K_ARROW
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -24,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = LAYOUT_ortho_4x12( \
   KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_EQL,  _______, \
   _______, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, _______, _______, KC_LCBR, KC_RCBR, KC_PIPE, KC_BSLS, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, K_ARROW, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
 ),
 
@@ -36,17 +40,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_ARROWS] = LAYOUT_ortho_4x12( \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
+  _______, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, _______,  _______, _______, \
   _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______  \
 ),
 
-[_ADJUST] = LAYOUT_ortho_4x12( \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, KC_DEL, \
-  _______, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, _______,  _______, _______, \
+[_LR] = LAYOUT_ortho_4x12( \
   _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______  \
+  _______, K_PAREN, K_PAREN, K_BRACE, K_BRACE, _______, _______, K_CBRAC, K_CBRAC,  _______, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______ \
 ),
 
 [_GAME] = LAYOUT_ortho_4x12( \
@@ -62,10 +66,10 @@ void matrix_init_user(void) {
     #ifdef UNICODE_ENABLE
     set_unicode_input_mode(UC_LNX);
     #endif
-};
+}
 
 uint32_t layer_state_set_user(uint32_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+  return update_tri_layer_state(state, _LOWER, _RAISE, _LR);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -87,6 +91,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             PLAY_SONG(song_down);
             #endif
             layer_state_set(1U << _QWERTY);
+            return false;
+
+        case K_ARROW:
+            if (get_mods() & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT))) {
+                SEND_STRING(SS_UP(X_LSHIFT) "=>" SS_DOWN(X_LSHIFT));
+                return false;
+            }
+
+            SEND_STRING("->");
+            return false;
+
+        case K_PAREN:
+            SEND_STRING("()" SS_TAP(X_LEFT));
+            return false;
+
+        case K_BRACE:
+            SEND_STRING("[]" SS_TAP(X_LEFT));
+            return false;
+
+        case K_CBRAC:
+            SEND_STRING("{}" SS_TAP(X_LEFT));
             return false;
 
         case KC_P:
