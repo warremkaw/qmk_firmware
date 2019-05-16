@@ -27,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_LOWER] = LAYOUT_ortho_4x12( \
   KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_EQL,  _______, \
-  _______, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, _______, _______, KC_LCBR, KC_RCBR, KC_PIPE, KC_BSLS, _______, \
+  _______, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_PIPE, KC_BSLS, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, K_ARROW, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
 ),
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_LR] = LAYOUT_ortho_4x12( \
   _______, _______, _______, _______, _______, _______, _______, _______, _______,  KC_UNDS, KC_PLUS, _______, \
-  _______, K_PAREN, K_PAREN, K_BRACE, K_BRACE, _______, _______, K_CBRAC, K_CBRAC,  _______, _______, _______, \
+  _______, K_PAREN, K_PAREN, K_BRACE, K_BRACE, K_PAREN, K_PAREN, K_CBRAC, K_CBRAC,  _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______ \
 ),
