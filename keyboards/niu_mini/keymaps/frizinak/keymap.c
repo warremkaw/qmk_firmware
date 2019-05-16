@@ -27,16 +27,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_LOWER] = LAYOUT_ortho_4x12( \
   KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_EQL,  _______, \
-  _______, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, _______, _______, KC_LCBR, KC_RCBR, KC_PIPE, KC_BSLS, _______, \
+  _______, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_PIPE, KC_BSLS, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, K_ARROW, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
 ),
 
 [_RAISE] = LAYOUT_ortho_4x12( \
-  _______, XXXXXXX, KC_7,    KC_8,    KC_9, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,    KC_F6,  _______, \
-  _______, XXXXXXX, KC_4,    KC_5,    KC_6, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12, _______, \
-  _______, XXXXXXX, KC_1,    KC_2,    KC_3, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______, \
-  _______, _______, _______, _______, KC_0, _______, _______, _______, _______, _______, _______, _______  \
+  _______, KC_PLUS, KC_7,    KC_8,    KC_9, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,    KC_F6,  _______, \
+  _______, KC_MINS, KC_4,    KC_5,    KC_6, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12, _______, \
+  _______, KC_ASTR, KC_1,    KC_2,    KC_3, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______, \
+  _______, KC_SLSH, _______, _______, KC_0, _______, _______, _______, _______, _______, _______, _______  \
 ),
 
 [_ARROWS] = LAYOUT_ortho_4x12( \
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_LR] = LAYOUT_ortho_4x12( \
   _______, _______, _______, _______, _______, _______, _______, _______, _______,  KC_UNDS, KC_PLUS, _______, \
-  _______, K_PAREN, K_PAREN, K_BRACE, K_BRACE, _______, _______, K_CBRAC, K_CBRAC,  _______, _______, _______, \
+  _______, K_PAREN, K_PAREN, K_BRACE, K_BRACE, K_PAREN, K_PAREN, K_CBRAC, K_CBRAC,  _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______ \
 ),
