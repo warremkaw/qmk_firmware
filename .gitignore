@@ -71,3 +71,6 @@ secrets.tar
 id_rsa_*
 /.vs
 compileUpload.sh
+
+# python things
+__pycache__
