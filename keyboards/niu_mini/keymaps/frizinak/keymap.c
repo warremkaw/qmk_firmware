@@ -63,6 +63,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 void matrix_init_user(void) {
+    // todo remove when retarded bug is fixed
+    keymap_config.raw = eeconfig_read_keymap();
+    keymap_config.swap_lctl_lgui = false;
+    eeconfig_update_keymap(keymap_config.raw);
     #ifdef UNICODE_ENABLE
     set_unicode_input_mode(UC_LNX);
     #endif
@@ -83,9 +87,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 #ifdef AUDIO_ENABLE
                 PLAY_SONG(song_mario_mush);
                 #endif
+
+                #ifdef RGBLIGHT_ENABLE
+                rgblight_enable_noeeprom();
+                rgblight_sethsv_noeeprom(255, 200, 73);
+                rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+                #endif
+
                 layer_state_set(1U << (_QWERTY | _GAME));
                 return false;
             }
+
+            #ifdef RGBLIGHT_ENABLE
+            rgblight_sethsv_noeeprom(245, 0, 30);
+            #endif
 
             #ifdef AUDIO_ENABLE
             PLAY_SONG(song_down);
