@@ -1,15 +1,19 @@
 #include QMK_KEYBOARD_H
 
-#define _NRML 0
-#define _LWR 1
-#define _RSE 2
-#define _ARW 3
-#define _MED 4
+enum layers {
+    _NRML,
+    _LWR,
+    _RSE,
+    _ARW,
+    _MED
+};
 
-#define LWR MO(_LWR)
-#define RSE MO(_RSE)
-#define ARW MO(_ARW)
-#define MED MO(_MED)
+enum layer_kcodes {
+    LWR = MO(_LWR),
+    RSE = MO(_RSE),
+    ARW = MO(_ARW),
+    MED = MO(_MED)
+};
 
 /*
 [0] = LAYOUT_ortho_4x12(
@@ -59,9 +63,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 void matrix_init_user(void) {
-    keymap_config.raw = eeconfig_read_keymap();
-    keymap_config.swap_rctl_rgui = false;
-    eeconfig_update_keymap(keymap_config.raw);
 }
 
 void matrix_scan_user(void) {
