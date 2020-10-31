@@ -1,20 +1,29 @@
 #include QMK_KEYBOARD_H
 
-#define _QWERTY 0
-#define _LOWER  1
-#define _RAISE  2
-#define _ARROWS 3
-#define _LR     4
-#define _GAME   5
+#define _QWERTY        0
+#define _LOWER         1
+#define _NPAD          2
+#define _RAISE         3
+#define _ARROWS        4
+#define _LR            5
+#define _RAWTHERAPEE   6
 
 #define SFT OSM(MOD_LSFT)
 
 enum planck_keycodes {
-    K_GAME = SAFE_RANGE,
-    K_PAREN,
+    K_PAREN = SAFE_RANGE,
     K_BRACE,
     K_CBRAC,
-    K_ARROW
+    K_ARROW,
+    K_RAWTHERAPEE,
+    RT_PREV,
+    RT_NEXT,
+    RT_DEL,
+    RT_1,
+    RT_2,
+    RT_3,
+    RT_4,
+    RT_5,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -22,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,        KC_T,   KC_Y,   KC_U,        KC_I,    KC_O,    KC_P,    KC_BSPC, \
   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,        KC_G,   KC_H,   KC_J,        KC_K,    KC_L,    KC_SCLN, KC_QUOT,  \
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,        KC_B,   KC_N,   KC_M,        KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT, \
-  KC_LCTL, _______, KC_LALT, KC_LGUI, MO(_LOWER),  KC_SPC, KC_SPC, MO(_RAISE),  KC_RGUI, K_GAME,  MO(_ARROWS), KC_RCTL  \
+  KC_LCTL, _______, KC_LALT, KC_LGUI, MO(_LOWER),  KC_SPC, KC_SPC, MO(_RAISE),  KC_RGUI, K_RAWTHERAPEE, MO(_ARROWS), MO(_NPAD)  \
 ),
 
 [_LOWER] = LAYOUT_ortho_4x12( \
@@ -30,6 +39,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_PIPE, KC_BSLS, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, K_ARROW, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
+),
+
+[_NPAD] = LAYOUT_ortho_4x12( \
+  KC_NUMLOCK, KC_PLUS, KC_P7,    KC_P8,    KC_P9, _______, _______, _______, _______, _______, _______, _______, \
+  _______,    KC_MINS, KC_P4,    KC_P5,    KC_P6, _______, _______, _______, _______, _______, _______, _______, \
+  _______,    KC_ASTR, KC_P1,    KC_P2,    KC_P3, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______, \
+  _______,    KC_SLSH, _______, _______,   KC_P0, _______, _______, _______, _______, _______, _______, _______  \
 ),
 
 [_RAISE] = LAYOUT_ortho_4x12( \
@@ -53,11 +69,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______ \
 ),
 
-[_GAME] = LAYOUT_ortho_4x12( \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_SPC,  KC_SPC,  _______, _______, _______, _______, _______  \
+[_RAWTHERAPEE] = LAYOUT_ortho_4x12( \
+  _______, RT_DEL,  _______, _______, _______, _______, _______, _______, _______, _______,  _______, RT_DEL, \
+  _______, RT_1,    RT_2,    RT_3,    RT_4,    RT_5,    RT_PREV, RT_NEXT, RT_PREV, RT_NEXT,  _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______  \
 )
 
 };
@@ -70,6 +86,22 @@ void matrix_init_user(void) {
     #ifdef UNICODE_ENABLE
     set_unicode_input_mode(UC_LNX);
     #endif
+    if (!(host_keyboard_leds() & (1<<USB_LED_NUM_LOCK))) {
+        register_code(KC_NUMLOCK);
+        unregister_code(KC_NUMLOCK);
+    }
+}
+
+void keyboard_post_init_user(void) {
+    #ifdef RGBLIGHT_ENABLE
+    rgblight_enable_noeeprom();
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+    rgblight_sethsv_noeeprom(0, 255, 10);
+    #endif
+}
+
+uint8_t rand8(uint8_t min, uint8_t max) {
+    return (rand() % (max - min)) + min;
 }
 
 uint32_t layer_state_set_user(uint32_t state) {
@@ -77,36 +109,19 @@ uint32_t layer_state_set_user(uint32_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    #ifdef RGBLIGHT_ENABLE
+    rgblight_sethsv_noeeprom(rand8(0, 230), rand8(180, 255), 10);
+    #endif
     if (!record->event.pressed) {
         return true;
     }
 
     switch (keycode) {
-        case K_GAME:
-            if (!layer_state_is(_GAME)) {
-                #ifdef AUDIO_ENABLE
-                PLAY_SONG(song_mario_mush);
-                #endif
-
-                #ifdef RGBLIGHT_ENABLE
-                rgblight_enable_noeeprom();
-                rgblight_sethsv_noeeprom(255, 200, 73);
-                rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-                #endif
-
-                layer_state_set(1U << (_QWERTY | _GAME));
-                return false;
-            }
-
-            #ifdef RGBLIGHT_ENABLE
-            rgblight_sethsv_noeeprom(245, 0, 30);
-            #endif
-
-            #ifdef AUDIO_ENABLE
-            PLAY_SONG(song_down);
-            #endif
-            layer_state_set(1U << _QWERTY);
-            return false;
+        #ifdef RGBLIGHT_ENABLE
+        case MO(_NPAD):
+            rgblight_toggle_noeeprom();
+            return true;
+        #endif
 
         case K_ARROW:
             if (get_mods() & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT))) {
@@ -144,6 +159,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
 
             break;
+
+        case K_RAWTHERAPEE:
+            if (!layer_state_is(_RAWTHERAPEE)) {
+                layer_state_set(1U << (_QWERTY | _RAWTHERAPEE));
+                return false;
+            }
+
+            layer_state_set(1U << _QWERTY);
+            return false;
+
+        case RT_PREV:
+            SEND_STRING(SS_DOWN(X_LSHIFT) SS_TAP(X_F3) SS_UP(X_LSHIFT));
+            return false;
+        case RT_NEXT:
+            SEND_STRING(SS_DOWN(X_LSHIFT) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_1:
+            SEND_STRING(SS_TAP(X_Y) SS_DOWN(X_LSHIFT) SS_TAP(X_1) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_2:
+            SEND_STRING(SS_TAP(X_Y) SS_DOWN(X_LSHIFT) SS_TAP(X_2) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_3:
+            SEND_STRING(SS_TAP(X_Y) SS_DOWN(X_LSHIFT) SS_TAP(X_3) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_4:
+            SEND_STRING(SS_TAP(X_Y) SS_DOWN(X_LSHIFT) SS_TAP(X_4) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_5:
+            SEND_STRING(SS_TAP(X_Y) SS_DOWN(X_LSHIFT) SS_TAP(X_5) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_DEL:
+            SEND_STRING(SS_TAP(X_Y) SS_TAP(X_DELETE) SS_DOWN(X_LSHIFT) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
     }
 
     return true;

@@ -1,134 +1,291 @@
 #include QMK_KEYBOARD_H
 
-#define _QWERTY 0
-#define _LOWER  1
-#define _RAISE  2
-#define _ARROWS 3
-#define _LR     4
-#define _GAME   5
+#define COMBO(string) SS_LCTRL(SS_LALT(SS_LGUI(string)))
 
-#define SFT OSM(MOD_LSFT)
+const uint32_t HUE_RED = 0;
+const uint32_t HUE_PINK = 306;
+const uint32_t HUE_PURPLE = 287;
+const uint32_t HUE_PURPLE_DARK = 274;
+const uint32_t HUE_BLUE = 200;
+const uint32_t HUE_BLUE_DARK = 239;
+const uint32_t HUE_GREEN = 90;
+const uint32_t HUE_YELLOW = 45;
+const uint32_t HUE_ORANGE = 30;
+
+const uint8_t SAT_NONE = 0;
+const uint8_t SAT_LOW = 255;
+const uint8_t SAT_MED = 255;
+const uint8_t SAT_HIGH = 255;
+
+const uint8_t BRIGHT_LOW = 10;
+const uint8_t BRIGHT_MED = 50;
+const uint8_t BRIGHT_HIGH = 100;
+const uint8_t BRIGHT_FULL = 255;
 
 enum planck_keycodes {
-    K_GAME = SAFE_RANGE,
-    K_PAREN,
-    K_BRACE,
-    K_CBRAC,
-    K_ARROW
+    K_HACK = SAFE_RANGE,
+    K_PULSE,
+    K_LWR,
+    K_RSE,
+    K_PRINT,
+    K_INSERT,
+    K_END,
+    K_PAUSE,
+    K_DELETE,
+    K_HOME,
+    K_CIRCLE,
+    K_CROSS,
+    K_TRIANGLE,
+    K_SQUARE,
+    K_UP1,
+    K_UP2,
+    K_DOWN1,
+    K_DOWN2,
+    K_ESC,
+    K_ALT,
+    K_CTRL,
+    K_SPACEU,
+    K_SPACED,
+    K_FACE1,
+    K_FACE2,
+    K_FACE3,
+    K_FACE4,
+    K_FACE5,
+    K_FACE6,
+    K_FACE7,
+    K_FACE8,
+    K_FACE9,
+    K_SYM1,
+    K_SYM2,
+    K_SYM3,
+    K_SYM4,
+    K_SYM5,
+    K_SYM6,
+    K_SYM7,
+    K_SYM8
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-[_QWERTY] = LAYOUT_ortho_4x12( \
-  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,        KC_T,   KC_Y,   KC_U,        KC_I,    KC_O,    KC_P,    KC_BSPC, \
-  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,        KC_G,   KC_H,   KC_J,        KC_K,    KC_L,    KC_SCLN, KC_QUOT,  \
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,        KC_B,   KC_N,   KC_M,        KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT, \
-  KC_LCTL, _______, KC_LALT, KC_LGUI, MO(_LOWER),  KC_SPC, KC_SPC, MO(_RAISE),  KC_RGUI, K_GAME,  MO(_ARROWS), KC_RCTL  \
-),
-
-[_LOWER] = LAYOUT_ortho_4x12( \
-  KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_EQL,  _______, \
-  _______, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_PIPE, KC_BSLS, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, K_ARROW, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
-),
-
-[_RAISE] = LAYOUT_ortho_4x12( \
-  _______, KC_PLUS, KC_7,    KC_8,    KC_9, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,    KC_F6,  _______, \
-  _______, KC_MINS, KC_4,    KC_5,    KC_6, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12, _______, \
-  _______, KC_ASTR, KC_1,    KC_2,    KC_3, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______, \
-  _______, KC_SLSH, _______, _______, KC_0, _______, _______, _______, _______, _______, _______, _______  \
-),
-
-[_ARROWS] = LAYOUT_ortho_4x12( \
-  _______, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, _______,  _______, _______, \
-  _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______  \
-),
-
-[_LR] = LAYOUT_ortho_4x12( \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______,  KC_UNDS, KC_PLUS, _______, \
-  _______, K_PAREN, K_PAREN, K_BRACE, K_BRACE, K_PAREN, K_PAREN, K_CBRAC, K_CBRAC,  _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______ \
-),
-
-[_GAME] = LAYOUT_ortho_4x12( \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_SPC,  KC_SPC,  _______, _______, _______, _______, _______  \
-)
-
+    [0] = LAYOUT_ortho_4x12( \
+        K_CIRCLE,   K_CROSS,  K_ESC,    K_FACE3, K_FACE6, K_FACE9, K_PRINT,  K_INSERT, K_SYM4, K_SYM8, K_RSE, KC_RIGHT, \
+        K_TRIANGLE, K_SQUARE, K_ALT,    K_FACE2, K_FACE5, K_FACE8, K_END,    K_PAUSE, K_SYM3, K_SYM7, K_LWR, KC_UP, \
+        K_UP2,      K_DOWN2,  K_CTRL,   K_FACE1, K_FACE4, K_FACE7, K_DELETE, K_HOME, K_SYM2, K_SYM6, K_PULSE, KC_DOWN, \
+        K_UP1,      K_DOWN1,  K_SPACEU, _______, _______, _______, _______,  K_SPACED, K_SYM1, K_SYM5, K_HACK, KC_LEFT \
+    ),
 };
 
-void matrix_init_user(void) {
-    #ifdef UNICODE_ENABLE
-    set_unicode_input_mode(UC_LNX);
-    #endif
+void light(uint32_t h, uint8_t s, uint8_t v) {
+    rgblight_enable_noeeprom();
+    h = 255 * h / 360;
+    rgblight_sethsv_noeeprom((uint8_t) h, s, v);
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
 }
 
-uint32_t layer_state_set_user(uint32_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _LR);
+void key(bool p, uint16_t kc) {
+    if (p) {
+        register_code(kc);
+        return;
+    }
+    unregister_code(kc);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case K_UP1:
+            key(record->event.pressed, KC_LALT);
+            key(record->event.pressed, KC_K);
+            return false;
+
+        case K_DOWN1:
+            key(record->event.pressed, KC_LALT);
+            key(record->event.pressed, KC_J);
+            return false;
+
+        case K_UP2:
+            key(record->event.pressed, KC_LALT);
+            key(record->event.pressed, KC_LSFT);
+            key(record->event.pressed, KC_K);
+            return true;
+
+        case K_DOWN2:
+            key(record->event.pressed, KC_LALT);
+            key(record->event.pressed, KC_LSFT);
+            key(record->event.pressed, KC_J);
+            return true;
+    }
+
     if (!record->event.pressed) {
+        rgblight_disable_noeeprom();
         return true;
     }
 
     switch (keycode) {
-        case K_GAME:
-            if (!layer_state_is(_GAME)) {
-                #ifdef AUDIO_ENABLE
-                PLAY_SONG(song_mario_mush);
-                #endif
-                layer_state_set(1U << (_QWERTY | _GAME));
-                return false;
-            }
-
-            #ifdef AUDIO_ENABLE
-            PLAY_SONG(song_down);
-            #endif
-            layer_state_set(1U << _QWERTY);
+        case K_TRIANGLE:
+            SEND_STRING(COMBO(" "));
+            light(HUE_ORANGE, SAT_HIGH, BRIGHT_HIGH);
             return false;
 
-        case K_ARROW:
-            if (get_mods() & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT))) {
-                SEND_STRING(SS_UP(X_LSHIFT) "=>" SS_DOWN(X_LSHIFT));
-                return false;
-            }
-
-            SEND_STRING("->");
+        case K_CIRCLE:
+            SEND_STRING(COMBO("."));
+            light(HUE_GREEN, SAT_HIGH, BRIGHT_MED);
             return false;
 
-        case K_PAREN:
-            SEND_STRING("()" SS_TAP(X_LEFT));
+        case K_SQUARE:
+            SEND_STRING(SS_LGUI("m"));
+            light(HUE_RED, SAT_MED, BRIGHT_MED);
             return false;
 
-        case K_BRACE:
-            SEND_STRING("[]" SS_TAP(X_LEFT));
+        case K_CROSS:
+            SEND_STRING(COMBO(","));
+            light(HUE_PURPLE, SAT_MED, BRIGHT_MED);
             return false;
 
-        case K_CBRAC:
-            SEND_STRING("{}" SS_TAP(X_LEFT));
+        case K_SPACEU:
             return false;
 
-        case KC_P:
-            if (get_mods() == MOD_BIT(KC_LGUI)) {
-                SEND_STRING(SS_UP(X_LGUI) SS_LCTRL("v") SS_DOWN(X_LGUI));
-                return false;
-            }
+        case K_SPACED:
+            return false;
 
-            break;
+        case K_CTRL:
+            SEND_STRING(COMBO("!"));
+            light(HUE_RED, SAT_MED, BRIGHT_MED);
+            return false;
 
-        case KC_BSPC:
-            if (get_mods() & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT))) {
-                SEND_STRING(SS_UP(X_LSHIFT) SS_TAP(X_DELETE) SS_DOWN(X_LSHIFT));
-                return false;
-            }
+        case K_ALT:
+            SEND_STRING(COMBO("@"));
+            light(HUE_GREEN, SAT_MED, BRIGHT_MED);
+            return false;
 
-            break;
+        case K_ESC:
+            SEND_STRING(COMBO("#"));
+            light(HUE_YELLOW, SAT_HIGH, BRIGHT_HIGH);
+            return false;
+
+        case K_FACE1:
+            SEND_STRING(COMBO("a"));
+            light(HUE_RED, SAT_MED, BRIGHT_MED);
+            return false;
+
+        case K_FACE2:
+            SEND_STRING(COMBO("b"));
+            light(HUE_GREEN, SAT_MED, BRIGHT_MED);
+            return false;
+
+        case K_FACE3:
+            SEND_STRING(COMBO("c"));
+            light(HUE_YELLOW, SAT_HIGH, BRIGHT_HIGH);
+            return false;
+
+        case K_FACE4:
+            SEND_STRING(COMBO("d"));
+            light(HUE_RED, SAT_MED, BRIGHT_MED);
+            return false;
+
+        case K_FACE5:
+            SEND_STRING(COMBO("e"));
+            light(HUE_GREEN, SAT_MED, BRIGHT_MED);
+            return false;
+
+        case K_FACE6:
+            SEND_STRING(COMBO("f"));
+            light(HUE_YELLOW, SAT_HIGH, BRIGHT_HIGH);
+            return false;
+
+        case K_FACE7:
+            SEND_STRING(COMBO("g"));
+            light(HUE_RED, SAT_MED, BRIGHT_MED);
+            return false;
+
+        case K_FACE8:
+            SEND_STRING(COMBO("h"));
+            light(HUE_GREEN, SAT_MED, BRIGHT_MED);
+            return false;
+
+        case K_FACE9:
+            SEND_STRING(COMBO("i"));
+            light(HUE_YELLOW, SAT_HIGH, BRIGHT_HIGH);
+            return false;
+
+        case K_DELETE:
+            SEND_STRING(COMBO("$"));
+            return false;
+
+        case K_END:
+            SEND_STRING(COMBO("%"));
+            rgblight_disable_noeeprom();
+            return false;
+
+        case K_PRINT:
+            SEND_STRING(COMBO("^"));
+            return false;
+
+        case K_HOME:
+            SEND_STRING(COMBO("&"));
+            return false;
+
+        case K_PAUSE:
+            SEND_STRING(COMBO("*"));
+            return false;
+
+        case K_INSERT:
+            SEND_STRING(COMBO("-"));
+            return false;
+
+        case K_SYM1:
+            SEND_STRING(COMBO("1"));
+            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
+            return false;
+
+        case K_SYM2:
+            SEND_STRING(COMBO("2"));
+            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
+            return false;
+
+        case K_SYM3:
+            SEND_STRING(COMBO("3"));
+            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
+            return false;
+
+        case K_SYM4:
+            SEND_STRING(COMBO("4"));
+            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
+            return false;
+
+        case K_SYM5:
+            SEND_STRING(COMBO("5"));
+            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
+            return false;
+
+        case K_SYM6:
+            SEND_STRING(COMBO("6"));
+            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
+            return false;
+
+        case K_SYM7:
+            SEND_STRING(COMBO("7"));
+            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
+            return false;
+
+        case K_SYM8:
+            SEND_STRING(COMBO("8"));
+            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
+            return false;
+
+        case K_HACK:
+            SEND_STRING(SS_LGUI("\n"));
+            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
+            return false;
+
+        case K_PULSE:
+            return false;
+
+        case K_LWR:
+            SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_F1))));
+            return false;
+
+        case K_RSE:
+            SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_F2))));
+            return false;
     }
 
     return true;

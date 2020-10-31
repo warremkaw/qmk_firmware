@@ -34,7 +34,15 @@ enum planck_keycodes {
     K_U7,
     K_U8,
     K_U9,
-    K_U10
+    K_U10,
+    RT_PREV,
+    RT_NEXT,
+    RT_DEL,
+    RT_1,
+    RT_2,
+    RT_3,
+    RT_4,
+    RT_5,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -74,10 +82,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_GAME] = LAYOUT_ortho_4x12( \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_SPC,  KC_SPC,  _______, _______, _______, _______, _______  \
+  _______, RT_DEL,  _______, _______, _______, _______, _______, _______, _______, _______,  _______, RT_DEL, \
+  _______, RT_1,    RT_2,    RT_3,    RT_4,    RT_5,    RT_PREV, RT_NEXT, RT_PREV, RT_NEXT,  _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______  \
 )
 
 };
@@ -127,6 +135,11 @@ float s9[][2] = SONG(CLUEBOARD_SOUND );
 float s10[][2] = SONG(FF_PRELUDE);
 
 void matrix_init_user(void) {
+    // todo remove when retarded bug is fixed
+    keymap_config.raw = eeconfig_read_keymap();
+    keymap_config.swap_lctl_lgui = false;
+    eeconfig_update_keymap(keymap_config.raw);
+
     #ifdef UNICODE_ENABLE
     set_unicode_input_mode(UC_LNX);
     #endif
@@ -275,6 +288,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
 
             break;
+        case RT_PREV:
+            SEND_STRING(SS_DOWN(X_LSHIFT) SS_TAP(X_F3) SS_UP(X_LSHIFT));
+            return false;
+        case RT_NEXT:
+            SEND_STRING(SS_DOWN(X_LSHIFT) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_1:
+            SEND_STRING(SS_TAP(X_Y) SS_DOWN(X_LSHIFT) SS_TAP(X_1) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_2:
+            SEND_STRING(SS_TAP(X_Y) SS_DOWN(X_LSHIFT) SS_TAP(X_2) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_3:
+            SEND_STRING(SS_TAP(X_Y) SS_DOWN(X_LSHIFT) SS_TAP(X_3) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_4:
+            SEND_STRING(SS_TAP(X_Y) SS_DOWN(X_LSHIFT) SS_TAP(X_4) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_5:
+            SEND_STRING(SS_TAP(X_Y) SS_DOWN(X_LSHIFT) SS_TAP(X_5) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
+        case RT_DEL:
+            SEND_STRING(SS_TAP(X_Y) SS_TAP(X_DELETE) SS_DOWN(X_LSHIFT) SS_TAP(X_F4) SS_UP(X_LSHIFT));
+            return false;
     }
 
     return true;
