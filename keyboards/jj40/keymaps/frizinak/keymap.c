@@ -23,54 +23,18 @@ const uint8_t BRIGHT_HIGH = 100;
 const uint8_t BRIGHT_FULL = 255;
 
 enum planck_keycodes {
-    K_HACK = SAFE_RANGE,
-    K_PULSE,
-    K_LWR,
-    K_RSE,
-    K_PRINT,
-    K_INSERT,
-    K_END,
-    K_PAUSE,
-    K_DELETE,
-    K_HOME,
-    K_CIRCLE,
-    K_CROSS,
-    K_TRIANGLE,
-    K_SQUARE,
-    K_UP1,
-    K_UP2,
-    K_DOWN1,
-    K_DOWN2,
-    K_ESC,
-    K_ALT,
-    K_CTRL,
-    K_SPACEU,
-    K_SPACED,
-    K_FACE1,
-    K_FACE2,
-    K_FACE3,
-    K_FACE4,
-    K_FACE5,
-    K_FACE6,
-    K_FACE7,
-    K_FACE8,
-    K_FACE9,
-    K_SYM1,
-    K_SYM2,
-    K_SYM3,
-    K_SYM4,
-    K_SYM5,
-    K_SYM6,
-    K_SYM7,
-    K_SYM8
+    K_1 = SAFE_RANGE,
+    K_Q,     K_W,      K_E,      K_R,      K_T,      K_Y,      K_U,      K_I,     K_O,     K_P,     K_4,
+    K_2,     K_A,     K_S,      K_D,      K_F,      K_G,      K_H,      K_J,      K_K,     K_L,     K_SEMI,  K_5,
+    K_3,     K_Z,     K_X,      K_C,      K_V,      K_B,      K_N,      K_M,      K_COMMA, K_DOT,   K_SLASH, K_6,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_ortho_4x12( \
-        K_CIRCLE,   K_CROSS,  K_ESC,    K_FACE3, K_FACE6, K_FACE9, K_PRINT,  K_INSERT, K_SYM4, K_SYM8, K_RSE, KC_RIGHT, \
-        K_TRIANGLE, K_SQUARE, K_ALT,    K_FACE2, K_FACE5, K_FACE8, K_END,    K_PAUSE, K_SYM3, K_SYM7, K_LWR, KC_UP, \
-        K_UP2,      K_DOWN2,  K_CTRL,   K_FACE1, K_FACE4, K_FACE7, K_DELETE, K_HOME, K_SYM2, K_SYM6, K_PULSE, KC_DOWN, \
-        K_UP1,      K_DOWN1,  K_SPACEU, _______, _______, _______, _______,  K_SPACED, K_SYM1, K_SYM5, K_HACK, KC_LEFT \
+        _______, _______, _______,  _______,  _______,  _______,  _______,  _______,  _______, _______, _______, _______,
+        K_1,     K_Q,     K_W,      K_E,      K_R,      K_T,      K_Y,      K_U,      K_I,     K_O,     K_P,     K_4,
+        K_2,     K_A,     K_S,      K_D,      K_F,      K_G,      K_H,      K_J,      K_K,     K_L,     K_SEMI,  K_5,
+        K_3,     K_Z,     K_X,      K_C,      K_V,      K_B,      K_N,      K_M,      K_COMMA, K_DOT,   K_SLASH, K_6
     ),
 };
 
@@ -91,27 +55,15 @@ void key(bool p, uint16_t kc) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case K_UP1:
+        case K_P:
             key(record->event.pressed, KC_LALT);
             key(record->event.pressed, KC_K);
             return false;
 
-        case K_DOWN1:
+        case K_4:
             key(record->event.pressed, KC_LALT);
             key(record->event.pressed, KC_J);
             return false;
-
-        case K_UP2:
-            key(record->event.pressed, KC_LALT);
-            key(record->event.pressed, KC_LSFT);
-            key(record->event.pressed, KC_K);
-            return true;
-
-        case K_DOWN2:
-            key(record->event.pressed, KC_LALT);
-            key(record->event.pressed, KC_LSFT);
-            key(record->event.pressed, KC_J);
-            return true;
     }
 
     if (!record->event.pressed) {
@@ -119,173 +71,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return true;
     }
 
+    light(HUE_BLUE, SAT_HIGH, BRIGHT_HIGH);
     switch (keycode) {
-        case K_TRIANGLE:
-            SEND_STRING(COMBO(" "));
-            light(HUE_ORANGE, SAT_HIGH, BRIGHT_HIGH);
-            return false;
+        //case K_Q: SEND_STRING(COMBO("q")); return false;
+        //case K_Q: SEND_STRING(COMBO("q")); return false;
+        case K_1: SEND_STRING(COMBO("1")); return false;
+        case K_Q: SEND_STRING(COMBO("q")); return false;
+        case K_W: SEND_STRING(COMBO("w")); return false;
+        case K_E: SEND_STRING(COMBO("e")); return false;
+        case K_R: SEND_STRING(COMBO("r")); return false;
+        case K_T: SEND_STRING(COMBO("t")); return false;
+        case K_Y: SEND_STRING(COMBO("y")); return false;
+        case K_U: SEND_STRING(COMBO("u")); return false;
+        case K_I: SEND_STRING(COMBO("i")); return false;
+        case K_O: SEND_STRING(COMBO("o")); return false;
+        case K_P: SEND_STRING(COMBO("p")); return false;
+        case K_4: SEND_STRING(COMBO("4")); return false;
 
-        case K_CIRCLE:
-            SEND_STRING(COMBO("."));
-            light(HUE_GREEN, SAT_HIGH, BRIGHT_MED);
-            return false;
+        case K_2: SEND_STRING(COMBO("2")); return false;
+        case K_A: SEND_STRING(COMBO("a")); return false;
+        case K_S: SEND_STRING(COMBO("s")); return false;
+        case K_D: SEND_STRING(COMBO("d")); return false;
+        case K_F: SEND_STRING(COMBO("f")); return false;
+        case K_G: SEND_STRING(COMBO("g")); return false;
+        case K_H: SEND_STRING(COMBO("h")); return false;
+        case K_J: SEND_STRING(COMBO("j")); return false;
+        case K_K: SEND_STRING(COMBO("k")); return false;
+        case K_L: SEND_STRING(COMBO("l")); return false;
+        case K_SEMI: SEND_STRING(COMBO(";")); return false;
+        case K_5: SEND_STRING(COMBO("5")); return false;
 
-        case K_SQUARE:
-            SEND_STRING(SS_LGUI("m"));
-            light(HUE_RED, SAT_MED, BRIGHT_MED);
-            return false;
+        case K_3: SEND_STRING(COMBO("3")); return false;
+        case K_Z: SEND_STRING(COMBO("z")); return false;
+        case K_X: SEND_STRING(COMBO("x")); return false;
+        case K_C: SEND_STRING(COMBO("c")); return false;
+        case K_V: SEND_STRING(COMBO("v")); return false;
+        case K_B: SEND_STRING(COMBO("b")); return false;
+        case K_N: SEND_STRING(COMBO("n")); return false;
+        case K_M: SEND_STRING(COMBO("m")); return false;
+        case K_COMMA: SEND_STRING(COMBO(",")); return false;
+        case K_DOT: SEND_STRING(COMBO(".")); return false;
+        case K_SLASH: SEND_STRING(COMBO("/")); return false;
+        case K_6: SEND_STRING(COMBO("6")); return false;
 
-        case K_CROSS:
-            SEND_STRING(COMBO(","));
-            light(HUE_PURPLE, SAT_MED, BRIGHT_MED);
-            return false;
-
-        case K_SPACEU:
-            return false;
-
-        case K_SPACED:
-            return false;
-
-        case K_CTRL:
-            SEND_STRING(COMBO("!"));
-            light(HUE_RED, SAT_MED, BRIGHT_MED);
-            return false;
-
-        case K_ALT:
-            SEND_STRING(COMBO("@"));
-            light(HUE_GREEN, SAT_MED, BRIGHT_MED);
-            return false;
-
-        case K_ESC:
-            SEND_STRING(COMBO("#"));
-            light(HUE_YELLOW, SAT_HIGH, BRIGHT_HIGH);
-            return false;
-
-        case K_FACE1:
-            SEND_STRING(COMBO("a"));
-            light(HUE_RED, SAT_MED, BRIGHT_MED);
-            return false;
-
-        case K_FACE2:
-            SEND_STRING(COMBO("b"));
-            light(HUE_GREEN, SAT_MED, BRIGHT_MED);
-            return false;
-
-        case K_FACE3:
-            SEND_STRING(COMBO("c"));
-            light(HUE_YELLOW, SAT_HIGH, BRIGHT_HIGH);
-            return false;
-
-        case K_FACE4:
-            SEND_STRING(COMBO("d"));
-            light(HUE_RED, SAT_MED, BRIGHT_MED);
-            return false;
-
-        case K_FACE5:
-            SEND_STRING(COMBO("e"));
-            light(HUE_GREEN, SAT_MED, BRIGHT_MED);
-            return false;
-
-        case K_FACE6:
-            SEND_STRING(COMBO("f"));
-            light(HUE_YELLOW, SAT_HIGH, BRIGHT_HIGH);
-            return false;
-
-        case K_FACE7:
-            SEND_STRING(COMBO("g"));
-            light(HUE_RED, SAT_MED, BRIGHT_MED);
-            return false;
-
-        case K_FACE8:
-            SEND_STRING(COMBO("h"));
-            light(HUE_GREEN, SAT_MED, BRIGHT_MED);
-            return false;
-
-        case K_FACE9:
-            SEND_STRING(COMBO("i"));
-            light(HUE_YELLOW, SAT_HIGH, BRIGHT_HIGH);
-            return false;
-
-        case K_DELETE:
-            SEND_STRING(COMBO("$"));
-            return false;
-
-        case K_END:
-            SEND_STRING(COMBO("%"));
-            rgblight_disable_noeeprom();
-            return false;
-
-        case K_PRINT:
-            SEND_STRING(COMBO("^"));
-            return false;
-
-        case K_HOME:
-            SEND_STRING(COMBO("&"));
-            return false;
-
-        case K_PAUSE:
-            SEND_STRING(COMBO("*"));
-            return false;
-
-        case K_INSERT:
-            SEND_STRING(COMBO("-"));
-            return false;
-
-        case K_SYM1:
-            SEND_STRING(COMBO("1"));
-            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
-            return false;
-
-        case K_SYM2:
-            SEND_STRING(COMBO("2"));
-            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
-            return false;
-
-        case K_SYM3:
-            SEND_STRING(COMBO("3"));
-            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
-            return false;
-
-        case K_SYM4:
-            SEND_STRING(COMBO("4"));
-            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
-            return false;
-
-        case K_SYM5:
-            SEND_STRING(COMBO("5"));
-            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
-            return false;
-
-        case K_SYM6:
-            SEND_STRING(COMBO("6"));
-            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
-            return false;
-
-        case K_SYM7:
-            SEND_STRING(COMBO("7"));
-            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
-            return false;
-
-        case K_SYM8:
-            SEND_STRING(COMBO("8"));
-            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
-            return false;
-
-        case K_HACK:
-            SEND_STRING(SS_LGUI("\n"));
-            light(HUE_RED, SAT_NONE, BRIGHT_LOW);
-            return false;
-
-        case K_PULSE:
-            return false;
-
-        case K_LWR:
-            SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_F1))));
-            return false;
-
-        case K_RSE:
-            SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_F2))));
-            return false;
     }
 
     return true;
